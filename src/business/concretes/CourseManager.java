@@ -10,12 +10,12 @@ import entities.Course;
 public class CourseManager implements CourseService {
 
 	private CourseDao courseDao;
-	private Logger logger;
+	private List<Logger> loggers;
 
-	public CourseManager(CourseDao courseDao, Logger logger) {
+	public CourseManager(CourseDao courseDao, List<Logger> loggers) {
 
 		this.courseDao = courseDao;
-		this.logger = logger;
+		this.loggers = loggers;
 	}
 
 	@Override
@@ -32,7 +32,8 @@ public class CourseManager implements CourseService {
 		}
 
 		this.courseDao.add(course);
-		this.logger.log();
+
+		this.loggers.forEach(lgg -> lgg.log());
 
 	}
 

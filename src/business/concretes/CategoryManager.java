@@ -10,24 +10,25 @@ import entities.Category;
 public class CategoryManager implements CategoryService {
 
 	private CategoryDao categoryDao;
-	private Logger logger;
+	private List<Logger> loggers;
 
-	public CategoryManager(CategoryDao categoryDao,Logger logger) {
+	public CategoryManager(CategoryDao categoryDao, List<Logger> loggers) {
 
 		this.categoryDao = categoryDao;
-		this.logger = logger;
+		this.loggers = loggers;
 	}
 
 	@Override
 	public void add(Category category) throws Exception {
-		
+
 		if (checkIfCategoryNameExists(category)) {
 
 			throw new Exception("Category already exists: " + category.getName());
 		}
 
 		this.categoryDao.add(category);
-		this.logger.log();
+
+		this.loggers.forEach(lgg -> lgg.log());
 
 	}
 
